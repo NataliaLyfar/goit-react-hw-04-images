@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import styled from "styled-components";
 import { createPortal } from "react-dom";
 
@@ -29,11 +29,13 @@ const modalRoot = document.querySelector('#modal-root');
 
 export class Modal extends Component {
 componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown)
+    window.addEventListener('keydown', this.handleKeyDown);
+    console.log('didmount');
 };
 componentWillUnmount(){
-    
-}
+    console.log('unmount');
+    window.removeEventListener('keydown', this.handleKeyDown);
+};
 
 handleKeyDown = e => {
     if (e.code === 'Escape') {
@@ -41,14 +43,19 @@ handleKeyDown = e => {
     };
   };
 
-
-  render() {
-    return createPortal(
-        <ModalBackdrop>
-        <ModalContent>
-           {this.props.children}
-        </ModalContent>
-        </ModalBackdrop>, modalRoot)
+handleBackdropClick = e => {
+    if(e.currentTarget === e.target){
+        this.props.onClose();
     };
+};
+
+render() {
+  return createPortal(
+    <ModalBackdrop onClick={this.handleBackdropClick}>
+      <ModalContent>
+        {this.props.children}
+      </ModalContent>
+    </ModalBackdrop>, modalRoot)
+ };
 };
 
