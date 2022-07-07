@@ -1,61 +1,53 @@
 import { Component } from "react";
+import PropTypes from 'prop-types';
 import styled from "styled-components";
 import { createPortal } from "react-dom";
 
 const ModalBackdrop = styled.div`
 position: fixed;
-width: 100vw;
-height: 100vh;
 top: 0;
 left: 0;
-background-color: ${p => p.theme.colors.backdrop};
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: ${p => p.theme.colors.shadow};
+z-index: 1200;
 `;
 const ModalContent = styled.div`
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%,-50%);
-min-height: 300px;
-max-width: 600px;
-width: 100%;
-padding: ${p => p.theme.space[2]}px;
-background-color: ${p => p.theme.colors.white};
-border-radius: ${p => p.theme.radii.normal};
-box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 5px, rgba(0, 0, 0, 0.1) -1px -1px 5px,
-rgba(0, 0, 0, 0.1) -1px 1px 5px, rgba(0, 0, 0, 0.1) 1px -1px 5px;
+max-width: calc(100vw - 48px);
+max-height: calc(100vh - 24px);
 `;
 
 const modalRoot = document.querySelector('#modal-root');
 
 export class Modal extends Component {
+static propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
-    console.log('didmount');
+  window.addEventListener('keydown', this.closeModal);
 };
+
 componentWillUnmount(){
-    console.log('unmount');
-    window.removeEventListener('keydown', this.handleKeyDown);
+  window.removeEventListener('keydown', this.closeModal);
 };
 
-handleKeyDown = e => {
-    if (e.code === 'Escape') {
-       this.props.onClose();
-    };
+closeModal = ({code, target, currentTarget}) => {
+  if(code === 'Escape' || target === currentTarget){
+    this.props.onClose();
   };
-
-handleBackdropClick = e => {
-    if(e.currentTarget === e.target){
-        this.props.onClose();
-    };
 };
 
 render() {
+  const { children } = this.props;
   return createPortal(
-    <ModalBackdrop onClick={this.handleBackdropClick}>
-      <ModalContent>
-        {this.props.children}
-      </ModalContent>
-    </ModalBackdrop>, modalRoot)
+    <ModalBackdrop onClick={this.closeModal}>
+      <ModalContent>{children}</ModalContent>
+    </ModalBackdrop>, modalRoot
+    );
  };
 };
 

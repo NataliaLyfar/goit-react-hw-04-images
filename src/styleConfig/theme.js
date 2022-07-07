@@ -1,29 +1,28 @@
 export const theme = {
     colors: {
-      backdrop: 'rgba(52, 46, 45, 0.7)',
       white: '#fff',
-      primary: 'rgba(253, 243, 248, 1)',
-      secondary: 'rgba(3, 7, 27, .8)',
-      tertiary: 'rgba(10, 78, 131, 0.45)',
-      accent: 'rgba(22, 145, 158, 0.7)',
-      accentBcg: 'rgba(129, 12, 110)',
+      primary: 'rgb(37,36,60)',
+      secondary: '#bee2e9',
+      tertiary: 'rgb(98,163,138)',
+      shadow: 'rgba(0, 0, 0, 0.8)',
+      accent: 'rgb(78,128,109)',
       errorColor: '#EB150B',
     },
-    space: [5, 10, 15, 20, 25, 30, 35, 50, 80, 250],
+    space: [5, 8, 12, 16, 20, 24, 30, 35, 50, 80, 250],
     fonts: {
       body: 'Smooch, cursive',
     },
     fontSizes: {
       xs: '12px',
       s: '14px',
-      m: '16px',
+      m: '18px',
       l: '20px',
       xl: '25px',
       xxl: '40px'
     },
     fontWeights: {
       normal: 400,
-      semibold: 600,
+      semibold: 500,
       bold: 700,
     },
     lineHeights: {
@@ -35,9 +34,8 @@ export const theme = {
       normal: '1px solid',
     },
     radii: {
-      none: '0',
-      normal: '4px',
+      small: '2px',
+      normal: '3px',
       round: '50%',
     },
-
   };
