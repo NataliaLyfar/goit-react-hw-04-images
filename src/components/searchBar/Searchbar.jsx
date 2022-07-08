@@ -1,8 +1,7 @@
 import { Component } from "react";
 import PropTypes from 'prop-types';
 import styled from "styled-components";
-
-import { GoSearch } from "react-icons/go"
+import { GoSearch } from "react-icons/go";
 
 const SearchBar = styled.header`
 top: 0;
@@ -15,7 +14,6 @@ align-items: center;
 min-height: 64px;
 padding: ${p => p.theme.space[2]}px ${p => p.theme.space[5]}px;
 color: ${p => p.theme.colors.white};
-margin-bottom: ${p => p.theme.space[3]}px;
 background: ${p => p.theme.colors.primary};
 background: linear-gradient(90deg, rgba(49,48,62,1) 0%, rgba(42,135,106,1) 27%, rgba(24,147,144,1) 81%, rgba(140,200,212,1) 99%);
 box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
@@ -78,8 +76,7 @@ handleChange = e => this.setState({query: e.currentTarget.value.toLowerCase()});
 
 handleSubmit = (e) => {
     e.preventDefault();
-    const { query } = this.state;
-    
+    const { query } = this.state;   
     this.props.onSearch(query);
     this.setState({query: ''});
   };

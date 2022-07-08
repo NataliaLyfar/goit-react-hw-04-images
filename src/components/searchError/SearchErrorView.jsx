@@ -8,7 +8,7 @@ margin: 0 auto;
 export const SearchErrorView = () => {
   return (
     <ErrorBox role='alert'>
-      <img src={errorImage} alt="errorImage" />
+      <img src={errorImage} alt="errorImageUnicorn" />
     </ErrorBox>
   );
 };

@@ -109,11 +109,11 @@ render () {
       <ToastContainer autoClose={3000}/>
       {status === 'pending' && <Loader/>}
       <GalleryList images={hits} onClick={this.handleToggleModal}/>
-      {status === 'resolved' && hits.length > 0 && <LoadMoreButton
-        onClick={this.handleClickLoadMore}/>}
+      {status === 'resolved' && hits.length > 0 &&
+        <LoadMoreButton onClick={this.handleClickLoadMore}/>}
       {status === 'rejected' && <SearchErrorView/>}
-      {showModal && (
-        <Modal onClose={this.handleToggleModal}>
+      {showModal && 
+        (<Modal onClose={this.handleToggleModal}>
           <img src={largeImageURL} alt={tags}/>
         </Modal>)}
     </Container>

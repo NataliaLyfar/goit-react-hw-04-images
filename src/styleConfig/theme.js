@@ -6,7 +6,6 @@ export const theme = {
       tertiary: 'rgb(98,163,138)',
       shadow: 'rgba(0, 0, 0, 0.8)',
       accent: 'rgb(78,128,109)',
-      errorColor: '#EB150B',
     },
     space: [5, 8, 12, 16, 20, 24, 30, 35, 50, 80, 250],
     fonts: {
