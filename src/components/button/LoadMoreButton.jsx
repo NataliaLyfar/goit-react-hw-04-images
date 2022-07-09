@@ -34,10 +34,6 @@ export class LoadMoreButton extends Component {
   static propTypes = { onClick: PropTypes.func.isRequired, };
 
   render() {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
     return <Button type="button" onClick={this.props.onClick}>Load more</Button>
   };
 };

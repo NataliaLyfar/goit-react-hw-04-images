@@ -23,7 +23,7 @@ export const GalleryList = ({images, onClick}) => {
        tags={tags}
        onClick={onClick}
       />
-    ))}
+      ))}
     </List>
   );
 };

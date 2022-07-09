@@ -37,21 +37,17 @@ async componentDidUpdate (prevProps, prevState) {
     API.searchParams.page = page;
     this.setState({status: Status.PENDING})
     try {
-      const { ...data } = await API.getImages(API.searchParams);
-      const { totalHits, hits } = data;     
+      const { totalHits, hits } = await API.getImages(API.searchParams);
         if(totalHits || hits.length){
           if (page === 1) {toast.success(`🦄 We found ${totalHits} images.`);};
           if (page >= 1) {
-            this.setState((prevState) => {
-              return {
+            this.setState((prevState) => ({
             totalHits: totalHits,
-            hits: [...prevState.hits, ...hits],
+            hits: prevState.hits ? [...prevState.hits, ...hits] : hits,
             status: Status.RESOLVED,
-            }});
+            }));
           };
-          if(hits.length < 12){
-            toast.info(`🦄 No more images for ${query}`);
-          }
+          if(hits.length < 12){toast.info(`🦄 No more images for ${query}`);};
         }
         else {
           this.setState ({
@@ -69,7 +65,13 @@ async componentDidUpdate (prevProps, prevState) {
       error,
       });
       toast.info(`Something went wrong ${error}`);
-      };
+      } 
+    };
+    if (prevState.hits !== this.state.hits) {
+      window.scrollBy({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
     };
   };
 
@@ -107,15 +109,15 @@ render () {
     <Container>
       <Searchbar onSearch={this.handleFormSearch}/>
       <ToastContainer autoClose={3000}/>
+      {status === 'rejected' && <SearchErrorView/>}
       {status === 'pending' && <Loader/>}
-      <GalleryList images={hits} onClick={this.handleToggleModal}/>
+      {hits.length !== 0 && <GalleryList images={hits} onClick={this.handleToggleModal}/>}
       {hits.length >= API.searchParams.per_page &&
         <LoadMoreButton onClick={this.handleClickLoadMore}/>}
-      {status === 'rejected' && <SearchErrorView/>}
       {showModal && 
-        (<Modal onClose={this.handleToggleModal}>
+        <Modal onClose={this.handleToggleModal}>
           <img src={largeImageURL} alt={tags}/>
-        </Modal>)}
+        </Modal>}
     </Container>
     );
   };
