@@ -38,25 +38,26 @@ async componentDidUpdate (prevProps, prevState) {
     this.setState({status: Status.PENDING})
     try {
       const { ...data } = await API.getImages(API.searchParams);
-      const { totalHits, hits } = data;
+      const { totalHits, hits } = data;     
         if(totalHits || hits.length){
           if (page === 1) {toast.success(`🦄 We found ${totalHits} images.`);};
           if (page >= 1) {
-            this.setState((prevState) => ({
-            page,
+            this.setState((prevState) => {
+              return {
             totalHits: totalHits,
             hits: [...prevState.hits, ...hits],
             status: Status.RESOLVED,
-            loading: false,
-            }));
+            }});
           };
+          if(hits.length < 12){
+            toast.info(`🦄 No more images for ${query}`);
+          }
         }
         else {
           this.setState ({
           totalHits: null,
           hits: [],
           status: Status.REJECTED,
-          loading: false,
           });
           toast.error("🦄 Sorry, there are no images matching your search query. Please try again.");
         };
@@ -66,7 +67,6 @@ async componentDidUpdate (prevProps, prevState) {
       hits: [],
       status: Status.REJECTED,
       error,
-      loading: false,
       });
       toast.info(`Something went wrong ${error}`);
       };
@@ -109,7 +109,7 @@ render () {
       <ToastContainer autoClose={3000}/>
       {status === 'pending' && <Loader/>}
       <GalleryList images={hits} onClick={this.handleToggleModal}/>
-      {status === 'resolved' && hits.length > 0 &&
+      {hits.length >= API.searchParams.per_page &&
         <LoadMoreButton onClick={this.handleClickLoadMore}/>}
       {status === 'rejected' && <SearchErrorView/>}
       {showModal && 
