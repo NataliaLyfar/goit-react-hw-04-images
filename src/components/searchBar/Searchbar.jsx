@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { useState } from "react";
 import PropTypes from 'prop-types';
 import styled from "styled-components";
 import { GoSearch } from "react-icons/go"
@@ -41,7 +41,7 @@ padding-right: ${p => p.theme.space[0]}px;
 &::placeholder {
     font: inherit;
     font-size: ${p => p.theme.fontSizes.m};
-  }
+  };
 `;
 const SearchButton = styled.button`
 display: flex;
@@ -64,40 +64,34 @@ svg{
   };
 `;
 
-export class Searchbar extends Component {
-static propTypes = {
-    onSearch: PropTypes.func.isRequired,
-  };
+export const Searchbar = ({onSearch}) => {
+const [query, setQuery] = useState('');
 
-state = {
-    query: '',
-  };
+const handleChange = e => setQuery(e.currentTarget.value.toLowerCase());
 
-handleChange = e => this.setState({query: e.currentTarget.value.toLowerCase()});
-
-handleSubmit = (e) => {
-    e.preventDefault();
-    const { query } = this.state;
-    this.props.onSearch(query);
-    this.setState({query: ''});
-  };
+const handleSubmit = (e) => {
+  e.preventDefault();
+  onSearch(query);
+  setQuery('');
+};
       
-render() {
-    const {query} = this.state;
-    return (
-        <SearchBar>
-            <SearchForm onSubmit={this.handleSubmit}>
-                <SearchInput
-                type="text"
-                placeholder="Search images and photos"
-                value={query}
-                onChange={this.handleChange}
-                autoComplete="off"
-                autoFocus
-                />
-                <SearchButton type="submit"><GoSearch/></SearchButton>
-            </SearchForm>
-        </SearchBar>
-      );
-  };
+return (
+  <SearchBar>
+      <SearchForm onSubmit={handleSubmit}>
+          <SearchInput
+          type="text"
+          placeholder="Search images and photos"
+          value={query}
+          onChange={handleChange}
+          autoComplete="off"
+          autoFocus
+          />
+          <SearchButton type="submit"><GoSearch/></SearchButton>
+      </SearchForm>
+  </SearchBar>
+  );
+};
+
+Searchbar.propTypes = {
+  onSearch: PropTypes.func.isRequired,
 };

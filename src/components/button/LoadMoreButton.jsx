@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from "styled-components";
 
@@ -25,15 +24,14 @@ box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
 transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
   &:hover,
   &:focus {
+    outline: none;
     background: ${p => p.theme.colors.accent};
     background: linear-gradient(90deg, rgba(78,128,109,1) 0%, rgba(12,228,159,1) 35%, rgba(24,147,144,1) 86%, rgba(140,200,212,1) 100%);
 };
 `;
 
-export class LoadMoreButton extends Component {
-  static propTypes = { onClick: PropTypes.func.isRequired, };
-
-  render() {
-    return <Button type="button" onClick={this.props.onClick}>Load more</Button>
-  };
+export const LoadMoreButton = ({onClick}) => {
+  return <Button type="button" onClick={onClick}>Load more</Button>
 };
+
+LoadMoreButton.propTypes = { onClick: PropTypes.func.isRequired };
