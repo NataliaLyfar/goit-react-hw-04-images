@@ -4,8 +4,9 @@ import * as API from 'services/pixabayApi';
 import { toast } from 'react-toastify';
 import { GalleryList } from 'components/gallery';
 import { Container } from "components/container";
-import { Searchbar } from "components/searchBar";
+import { SearchBar } from "components/searchBar";
 import { Loader } from "components/loader";
+import { Rings } from  'react-loader-spinner';
 import { LoadMoreButton } from "components/button";
 import { SearchErrorView } from "components/searchError";
 import { Modal } from "components/modal";
@@ -20,8 +21,9 @@ const Status = {
 export const App = () => {
 const [query, setQuery] = useState('');
 const [page, setPage] = useState(1);
-const [images, setImages] = useState([]);
+const [perPage, setPerPage] = useState(12);
 const [status, setStatus] = useState(Status.IDLE);
+const [images, setImages] = useState([]);
 const [showModal, setShowModal] = useState(false);
 const [imageData, setImageData] = useState({url: null, alt: ''});
 
@@ -33,6 +35,7 @@ useEffect (() => {
     setStatus(Status.PENDING);
     API.searchParams.q = query;
     API.searchParams.page = page;
+    API.searchParams.per_page = perPage;
     try {
       const { totalHits, hits } = await API.getImages(API.searchParams);
         if(totalHits){
@@ -52,7 +55,7 @@ useEffect (() => {
       toast.info(`Something went wrong ${error}`);
     };
     })();
-  }, [query, page]);
+  }, [query, page, perPage]);
 
 useEffect(() => {
   window.scrollBy({
@@ -71,7 +74,10 @@ const handleFormSearch = (query) => {
    setPage(1);
    setImages([]);
 };
-
+const handleChoicePerPage = (e) => {
+  console.log(e);
+  setPerPage(e.value);
+}
 const handleClickLoadMore = () => setPage(page =>  page + 1);
 
 const handleToggleModal = (e) => {
@@ -83,13 +89,16 @@ const handleToggleModal = (e) => {
 
 return (
   <Container>
-    <Searchbar onSearch={handleFormSearch}/>
+    <SearchBar onSearch={handleFormSearch} onChange={handleChoicePerPage}/>
     <ToastContainer autoClose={3000}/>
     {status === Status.REJECTED && <SearchErrorView/>}
-    {status === Status.PENDING && <Loader/>}
+    {status === Status.PENDING && 
+      <Loader> 
+        <Rings color="#21c18e" height={100} width={100} ariaLabel='loading'/>
+      </Loader>}
     {images.length !== 0 && <GalleryList images={images} onClick={handleToggleModal}/>}
     {images.length >= API.searchParams.per_page &&
-      <LoadMoreButton onClick={handleClickLoadMore}/>}
+      <LoadMoreButton onClick={handleClickLoadMore}>Load more</LoadMoreButton>}
     {showModal && 
       <Modal onClose={handleToggleModal}>
         <img src={imageData.url} alt={imageData.alt}/>

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import PropTypes from 'prop-types';
 import styled from "styled-components";
-import { GoSearch } from "react-icons/go"
+import { GoSearch } from "react-icons/go";
+import { SelectForm } from "./SelectForm";
 
-const SearchBar = styled.header`
+const HeaderWraper = styled.header`
 top: 0;
 left: 0;
 position: sticky;
@@ -64,7 +65,7 @@ svg{
   };
 `;
 
-export const Searchbar = ({onSearch}) => {
+export const SearchBar = ({onSearch, onChange}) => {
 const [query, setQuery] = useState('');
 
 const handleChange = e => setQuery(e.currentTarget.value.toLowerCase());
@@ -74,10 +75,10 @@ const handleSubmit = (e) => {
   onSearch(query);
   setQuery('');
 };
-      
+
 return (
-  <SearchBar>
-      <SearchForm onSubmit={handleSubmit}>
+  <HeaderWraper>
+      <SearchForm onSubmit={handleSubmit} >
           <SearchInput
           type="text"
           placeholder="Search images and photos"
@@ -88,10 +89,12 @@ return (
           />
           <SearchButton type="submit"><GoSearch/></SearchButton>
       </SearchForm>
-  </SearchBar>
+      <SelectForm onChange={(e) => onChange(e)} />
+  </HeaderWraper>
   );
 };
 
-Searchbar.propTypes = {
+SearchBar.propTypes = {
   onSearch: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 };
