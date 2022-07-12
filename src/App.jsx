@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { ToastContainer } from 'react-toastify';
 import * as API from 'services/pixabayApi';
 import { toast } from 'react-toastify';
-import { GalleryList } from 'components/gallery';
-import { Container } from "components/container";
-import { SearchBar } from "components/searchBar";
-import { Loader } from "components/loader";
+import { GalleryList } from 'components/Gallery';
+import { Container } from "components/Container";
+import { SearchBar } from "components/SearchBar";
+import { Loader } from "components/Loader";
 import { Rings } from  'react-loader-spinner';
-import { LoadMoreButton } from "components/button";
-import { SearchErrorView } from "components/searchError";
-import { Modal } from "components/modal";
+import { LoadMoreButton } from "components/Button";
+import { SearchErrorView } from "components/SearchError";
+import { Modal } from "components/Modal";
 
 const Status = {
   IDLE: 'idle',
