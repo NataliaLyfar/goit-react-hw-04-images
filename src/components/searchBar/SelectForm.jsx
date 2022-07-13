@@ -9,14 +9,13 @@ align-items: center;
 `;
 const SelectTitle = styled.p`
 font-size: ${p => p.theme.fontSizes.m};
-margin-left: ${p => p.theme.space[0]}px;
+margin: 0 ${p => p.theme.space[0]}px;
 `;
 
 const customStyles = {
   menu: (provided, state) => ({
     ...provided,
     width: 50,
-    padding: 5,
     color: '#000',
     backgroundColor: '#fff',
   }),
@@ -29,7 +28,9 @@ const customStyles = {
     const transition = 'opacity 300ms';
     return { ...provided, opacity, transition, color};
   },
-  control: (styles) => ({ ...styles, borderWidth: 0 }),
+  control: (styles) => ({ ...styles, borderWidth: 0, fontSize: 16 }),
+  valueContainer: (styles) => ({ ...styles, padding: 0 }),
+  indicatorsContainer: (styles) => ({ ...styles, padding: 0, width: 30 }),
 };
 
 const optionsPerPage= [
