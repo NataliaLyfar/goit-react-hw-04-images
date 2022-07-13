@@ -64,8 +64,11 @@ svg{
     opacity: 1; 
   };
 `;
+const Notification = styled.p`
+margin-right: ${p => p.theme.space[0]}px;
+`;
 
-export const SearchBar = ({onSearch, onChange}) => {
+export const SearchBar = ({onSearch, onChange, totalHits}) => {
 const [query, setQuery] = useState('');
 
 const handleChange = e => setQuery(e.currentTarget.value.toLowerCase());
@@ -78,6 +81,7 @@ const handleSubmit = (e) => {
 
 return (
   <HeaderWraper>
+    <Notification>🦄 found {totalHits} images!</Notification>
       <SearchForm onSubmit={handleSubmit} >
           <SearchInput
           type="text"
@@ -97,4 +101,5 @@ return (
 SearchBar.propTypes = {
   onSearch: PropTypes.func.isRequired,
   onChange: PropTypes.func,
+  totalHits: PropTypes.number,
 };

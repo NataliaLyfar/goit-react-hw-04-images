@@ -24,6 +24,7 @@ const [page, setPage] = useState(1);
 const [perPage, setPerPage] = useState(12);
 const [status, setStatus] = useState(Status.IDLE);
 const [images, setImages] = useState([]);
+const [totalHits, setTotalHits] = useState(0);
 const [showModal, setShowModal] = useState(false);
 const [imageData, setImageData] = useState({url: null, alt: ''});
 
@@ -39,8 +40,8 @@ useEffect (() => {
     try {
       const { totalHits, hits } = await API.getImages(API.searchParams);
         if(totalHits){
-          if (page === 1) {toast.success(`🦄 We found ${totalHits} images.`);};
             setImages(images => [...images, ...hits]);
+            setTotalHits(totalHits);
             setStatus(Status.RESOLVED);
           if(hits.length < 12){toast.info(`🦄 No more images for ${query}`);};
         }
@@ -87,7 +88,7 @@ const handleToggleModal = (e) => {
 
 return (
   <Container>
-    <SearchBar onSearch={handleFormSearch} onChange={handleChoicePerPage}/>
+    <SearchBar onSearch={handleFormSearch} onChange={handleChoicePerPage} totalHits={totalHits}/>
     <ToastContainer autoClose={3000}/>
     {status === Status.REJECTED && <SearchErrorView/>}
     {status === Status.PENDING && 
