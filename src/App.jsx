@@ -47,11 +47,13 @@ useEffect (() => {
         }
         else {
           setImages([]);
+          setTotalHits(0);
           setStatus(Status.REJECTED);
           toast.error("🦄 Sorry, there are no images matching your search query. Please try again.");
         };
     } catch (error) {
       setImages([]);
+      setTotalHits(0);
       setStatus(Status.REJECTED);
       toast.info(`Something went wrong ${error}`);
     };
@@ -69,10 +71,12 @@ const handleFormSearch = (query) => {
   if(!query) {
     setImages([]);
     setStatus(Status.REJECTED);
+    setTotalHits(0);
     toast('🦄 There is nothing to search!');
    };
    setQuery(query);
    setPage(1);
+   setTotalHits(0)
    setImages([]);
 };
 const handleChoicePerPage = (e) => setPerPage(e.value);
@@ -96,7 +100,7 @@ return (
         <Rings color="#21c18e" height={100} width={100} ariaLabel='loading'/>
       </Loader>}
     {images.length !== 0 && <GalleryList images={images} onClick={handleToggleModal}/>}
-    {images.length >= API.searchParams.per_page &&
+    {images.length >= perPage &&
       <LoadMoreButton onClick={handleClickLoadMore}>Load more</LoadMoreButton>}
     {showModal && 
       <Modal onClose={handleToggleModal}>

@@ -20,6 +20,9 @@ background: ${p => p.theme.colors.primary};
 background: linear-gradient(90deg, rgba(49,48,62,1) 0%, rgba(42,135,106,1) 27%, rgba(24,147,144,1) 81%, rgba(140,200,212,1) 99%);
 box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
   0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+@media (max-width: 955px) {
+    flex-direction: column;
+};
 `;
 const SearchForm = styled.form`
 display: flex;
@@ -66,6 +69,7 @@ svg{
 `;
 const Notification = styled.p`
 margin-right: ${p => p.theme.space[0]}px;
+padding: ${p => p.theme.space[1]}px 0;
 `;
 
 export const SearchBar = ({onSearch, onChange, totalHits}) => {

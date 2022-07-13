@@ -2,23 +2,23 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styled from 'styled-components';
 
-const SelectTitle = styled.p`
-font-size: ${p => p.theme.fontSizes.m};
-margin: ${p => p.theme.space[0]}px;
-`;
 const SelectBox = styled.div`
 display: flex;
 justify-content: center;
 align-items: center;
 `;
+const SelectTitle = styled.p`
+font-size: ${p => p.theme.fontSizes.m};
+margin-left: ${p => p.theme.space[0]}px;
+`;
+
 const customStyles = {
   menu: (provided, state) => ({
     ...provided,
     width: 50,
-    color: 'rgb(98,163,138)',
     padding: 5,
+    color: '#000',
     backgroundColor: '#fff',
-    
   }),
   indicatorSeparator: () => ({
     color: 'rgb(98,163,138)',
@@ -57,7 +57,7 @@ return (
             primary25: '#bee2e9',
             primary: 'rgba(27, 145, 139 , 0.8)',
             neutral0: 'rgba(27, 145, 139 , 0.8)',
-            neutral30: 'rgba(27, 145, 139 , 0.8)',
+            neutral30: '#fff',
             neutral20: '#fff',            
           },
         })}
